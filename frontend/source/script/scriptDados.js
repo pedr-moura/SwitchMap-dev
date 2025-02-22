@@ -2,8 +2,9 @@ async function carregarDados() {
     limparInput()
     
     // 172.16.208.74 -> repo
-    // 172.16.197.44 -> dev
-    const response = await fetch('http://172.16.208.74:5000/status');
+    // 172.16.197.44 -> 
+    // test 192.168.0.8:5000
+    const response = await fetch('http://192.168.0.8:5000/status');
     const dados = await response.json();
     console.log('Dados carregados:', dados);
 
@@ -120,7 +121,7 @@ async function carregarDados() {
 }
 
 async function atualizarDados() {
-    const response = await fetch('http://172.16.197.58:5000/status');
+    const response = await fetch('http://192.168.0.8:5000/status');
     const dados = await response.json();
 
     markersLayer.clearLayers(); // Remove todos os marcadores existentes
