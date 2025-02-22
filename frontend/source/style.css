@@ -1,0 +1,330 @@
+    *{
+        cursor: default;
+        user-select: none;
+    }
+        #mapToggle{
+            width: 0;
+        }
+        body {
+            overflow: hidden;
+            height: 100%;
+            background-color: #313131;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.171) 2px, transparent 0);
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            font-family: "Rubik", serif;
+        }
+        .titulo {
+            height: 50px;
+            width: 100%;
+            display: flex;  
+            position: fixed;
+            align-items: center;
+            z-index: 999999999;
+            background: #777;
+            justify-content: center;
+
+            span{
+                color: #fff;
+                font-size: 13px;
+                position: fixed;
+                right: 10px;
+            }
+        }
+        .titulo h1 {
+            text-align: center;
+            color: white;
+        }
+        #toggleButton{
+            border: none;
+            background-color: #313131;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 30px;
+            min-width: 120px;
+        }
+        .container {
+            min-width: 543px;
+            top: 77px;
+            width: fit-content;
+            display: flex;
+            gap: 20px;
+            height: fit-content;
+            position: absolute;
+            right: 30px;
+            z-index: 99999999;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+        .opcoes {
+            z-index: 100000;
+            display: flex;
+            gap: 15px;
+
+        }
+        .pesquisa {
+            z-index: 99999;
+            bottom: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .pesquisa svg {
+            position: relative;
+            left: 30px;
+            color: #808080;
+        }
+        #ipBusca {
+            width: 290px;
+            padding: 5px;
+            text-align: center;
+            border-radius: 31px;
+            border: 1px solid #808080;
+            color: #808080;
+            outline: none;
+            height: 30px;
+        }
+        #map { 
+            top: 50px;
+            position: absolute;
+            height: 100%; 
+            width: 100%; 
+            min-width: 470px;
+            float: left; 
+            border: 2px solid #2b82cb;
+            border-radius: 15px;
+            z-index: 99999999;
+        }
+
+
+        #lista { 
+            position: absolute;
+            right: 0px;
+            font-size: 12px;
+            height: 300px;
+            width: 70%; 
+            text-wrap: nowrap;
+            float: right; 
+            overflow-y: auto; 
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border: 2px solid #777;
+            border-radius: 8px;   
+
+            li:hover{
+                background-color: #f1f1f1;
+                cursor: default;
+            }
+        }
+
+        
+            /* Personaliza a largura da barra de rolagem */
+            #lista::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+            
+            /* Cor de fundo da barra de rolagem */
+            #lista::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+            
+            /* Cor e estilo do "thumb" (a parte arrastável) */
+            #lista::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 10px;
+            }
+            
+            /* Hover no thumb */
+            #lista::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+        .nomedosw {
+            display: flex;
+            text-align: -webkit-match-parent;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 90%;
+            user-select: text;
+        }
+        #icone-sw {
+            padding: 5px;
+            width: 20px;
+            background-color: rgb(240, 248, 255);
+            border-radius: 10px;
+        }
+        #icone-sw:hover {
+            opacity: 1;
+            background-color: rgb(222, 219, 219);
+        }
+        .mudartipo {
+            z-index: 999;
+            left: 220px;
+            bottom: 10px;
+            width: max-content;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
+            background: rgb(255, 255, 255);
+            padding: 5px 5px;
+            border-radius: 61px;
+            font-size: 12px;
+            border: 1px solid #808080;
+            height: 30px;
+        }
+        .latitude {
+            font-size: 10px;
+            color: #777;
+            user-select: text;
+        }
+        .highlight {
+            border: 3px solid #ff0000; /* Destaque em vermelho */
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Checkbox Styles */
+        .checkbox-wrapper-4 * {
+            box-sizing: border-box;
+            color: #808080;
+        }
+        .checkbox-wrapper-4 .cbx {
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+        .checkbox-wrapper-4 .cbx:not(:last-child) {
+            margin-right: 6px;
+        }
+
+        .checkbox-wrapper-4 .cbx span {
+            float: left;
+            vertical-align: middle;
+            transform: translate3d(0, 0, 0);
+        }
+        .checkbox-wrapper-4 .cbx span:first-child {
+            position: relative;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            transform: scale(1);
+            border: 1px solid #cccfdb;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 1px rgba(0, 16, 75, 0.05);
+        }
+        .checkbox-wrapper-4 .cbx span:first-child svg {
+            position: absolute;
+            top: 3px;
+            left: 2px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 16px;
+            stroke-dashoffset: 16px;
+            transition: all 0.3s ease;
+            transition-delay: 0.1s;
+            transform: translate3d(0, 0, 0);
+        }
+        .checkbox-wrapper-4 .cbx span:last-child {
+            padding-left: 8px;
+            line-height: 18px;
+        }
+        .checkbox-wrapper-4 .cbx:hover span:first-child {
+            border-color: #07f;
+        }
+        .checkbox-wrapper-4 .inp-cbx {
+            position: absolute;
+                   }
+        .checkbox-wrapper-4 .inp-cbx:checked + .cbx span:first-child {
+            background: #07f;
+            border-color: #07f;
+            animation: wave-4 0.4s ease;
+            border-radius: 50px;
+        }
+        .checkbox-wrapper-4 .inp-cbx:checked + .cbx span:first-child svg {
+            stroke-dashoffset: 0;
+        }
+        .checkbox-wrapper-4 .inline-svg {
+            position: absolute;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+        @media screen and (max-width: 840px) {
+            .checkbox-wrapper-4 .cbx {
+                width: 100%;
+                display: inline-block;
+            }
+        }
+        @-moz-keyframes wave-4 {
+            50% {
+                transform: scale(0.9);
+            }
+        }
+        @-webkit-keyframes wave-4 {
+            50% {
+                transform: scale(0.9);
+            }
+        }
+        @-o-keyframes wave-4 {
+            50% {
+                transform: scale(0.9);
+            }
+        }
+        @keyframes wave-4 {
+            50% {
+                transform: scale(0.9);
+            }
+        }
+
+        .leaflet-control-zoom{
+            position: absolute;
+            z-index: 999999999999999;
+        }
+        .hidden {
+            display: none;
+        }
+        
+        #update{
+            border: none;
+            background: none;
+            position: absolute;
+            left: 5px;
+
+            #dataHora{
+                position: absolute;
+                left: 50px;
+                top: 3px;
+                color: #fff;
+                font-size: 11px;
+            }
+            svg{
+                width: 30px;
+                fill: #fff;
+                height: 30px;
+            }
+
+            svg:hover{
+                fill: #313131;
+            }
+           
+        }
+
+        #toggleLinesButton{
+            background-color: #fff;
+            border-radius: 50px;
+            padding: 10px 15px;
+            min-width: 130px;
+            
+        }
+        

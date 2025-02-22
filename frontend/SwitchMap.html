@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Switches - Imperatriz</title>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="source/style.css">
+
+</head>
+<body>
+    <!-- Desenvolvido por pedromoura.idr@suzano.com.br -->
+
+    
+    <div id="map"></div>
+
+
+
+    <div class="titulo">
+        <button id="update" onclick="carregarDados()"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="155.724px" height="155.723px" viewBox="0 0 155.724 155.723" style="enable-background:new 0 0 155.724 155.723;"
+            xml:space="preserve">
+       <g>
+           <g id="_x33_50._Repeat">
+               <g>
+                   <path d="M42.735,121.521c-12.77-10.273-20.942-26.025-20.942-43.691c0-26.114,17.882-47.992,42.051-54.23V9.154
+                       C31.854,15.646,7.776,43.927,7.776,77.83c0,20.951,9.199,39.738,23.767,52.578C42.819,140.911,49.827,126.894,42.735,121.521z
+                        M123.589,24.746c-7.18-6.485-17.693,4.028-10.801,9.236c12.888,10.27,21.143,26.097,21.143,43.848
+                       c0,26.118-17.885,48-42.052,54.234v14.449c31.99-6.499,56.068-34.776,56.068-68.684
+                       C147.947,56.602,138.502,37.596,123.589,24.746z M70.037,35.707l22.813-13.661c3.319-1.988,3.326-5.226,0.018-7.228L69.844,0.883
+                       c-3.312-1.999-5.985-0.49-5.969,3.381l0.124,28.035C64.009,36.168,66.714,37.695,70.037,35.707z M85.883,120.029l-23.027,13.935
+                       c-3.311,2.002-3.304,5.239,0.019,7.228l22.811,13.662c3.319,1.984,6.03,0.462,6.047-3.412l0.12-28.034
+                       C91.865,119.54,89.188,118.03,85.883,120.029z"/>
+               </g>
+           </g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       <g>
+       </g>
+       </svg>
+
+       <div id="dataHora"></div>
+       </button>
+        <h1 style="opacity: 0.1;">Mapeamento SW - UNFMA</h1>
+        <span>Desenvolvido por pedromoura.idr@suzano.com.br</span>
+    </div>
+    <div class="container">
+
+        <div class="opcoes">
+
+            <label for="ipBusca" class="pesquisa"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                <input type="text" name="ipBusca" id="ipBusca" placeholder="Pesquisar por IP" onkeyup="pesquisarPorIP()">
+            </label>
+
+            <div class="mudartipo">
+                <div class="checkbox-wrapper-4">
+                    <input type="checkbox" id="mapToggle" class="inp-cbx" />
+                    <label for="mapToggle" class="cbx">
+                        <span>
+                            <svg height="10px" width="12px">
+                                <symbol viewBox="0 0 12 10" id="check-4">
+                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                </symbol>
+                            </svg>
+                        </span>
+                        <span>Satélite</span>
+                    </label>
+                    <svg class="inline-svg">
+                        <symbol viewBox="0 0 12 10" id="check-4">
+                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                        </symbol>
+                    </svg>
+                </div>
+            </div>
+            <button id="toggleButton" onclick="ocultarLista()"></button>
+
+            <button id="toggleLinesButton">Exibir relação</button>
+        </div>
+        
+        <div class="backgroundlista">
+            <div id="lista">
+               
+    <div id="botoes-tipos"></div>
+                <h3>Itens sem Localização</h3>
+                <ul id="sem-localizacao">
+
+                </ul>
+            </div>
+           
+        </div>
+
+    </div>
+    
+    <script src="https://switchmapservice.vercel.app/source/script/open.js"></script>
+    <script src="https://switchmapservice.vercel.app/source/script/scriptDados.js"></script>
+    <script src="https://switchmapservice.vercel.app/source/script/manipularMapa.js"></script>
+    <script src="https://switchmapservice.vercel.app/source/script/info.js"></script>
+
+</body>
+</html>
