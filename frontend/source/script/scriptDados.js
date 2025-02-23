@@ -1,10 +1,80 @@
+const toggleMap = document.getElementById('mudartipo')
+const toggleSwView = document.getElementById('toggleShowSwitches')
+const toggleDependencias = document.getElementById('toggleLinesButton')
+
+const opcoesTitulo = document.getElementById('opcoes')
+
+const cssSW = document.getElementById('css-sw')
+
+let showIconesMaps = 0;
+let showDependencias = 0;
+
+function countDependencias() {
+
+    if (showDependencias == 0) {
+        showDependencias += 1
+    }else{
+        showDependencias -= 1
+    }
+}
+toggleDependencias.style.display = "none"
+toggleMap.style.display = "none"
+opcoesTitulo.style.display = "none"
+
+function exibirToggleMap() {
+    toggleMap.style.display = "block"
+    opcoesTitulo.style.display = "flex"
+}
+
+toggleSwView.style.border = "1px solid #313131"
+
+function  ocultarSw() {
+    cssSW.innerHTML = `<style>#icone-sw {display: none;</style>`
+}
+ocultarSw()
+
+function showSw() {
+    if (showIconesMaps == 0) {
+
+        toggleSwView.style.border = "3px solid rgb(3 3 255)"
+
+        toggleDependencias.style.display = "block"
+
+        cssSW.innerHTML = `
+        <style>
+                #icone-sw {
+                padding: 5px;
+                width: 20px;
+                background-color: rgb(240, 248, 255);
+                border-radius: 50px;
+            }
+            #icone-sw:hover {
+                opacity: 1;
+                background-color: rgb(222, 219, 219);
+            }
+        </style>
+        `
+        showIconesMaps += 1
+    }else{
+        toggleSwView.style.border = "1px solid #313131"
+
+        toggleDependencias.style.display = "none"
+        if (showDependencias == 1) {
+            toggleDependencias.click()
+        }
+        ocultarSw()
+        showIconesMaps -= 1
+    }
+}
+
+carregarDados()
+
 async function validarResposta() {
     try {
         const response = await fetch('http://192.168.0.8:5000/status');
         const dados = await response.json();
         
         if (dados.erro) {
-
             divLoading.innerHTML = erroConexao
             return null;
         }
@@ -12,24 +82,19 @@ async function validarResposta() {
         return dados;
     } catch (error) {
         divLoading.innerHTML = erroConexao
+        
         return null;
     }
 }
 
-const toggleMap = document.getElementById('mudartipo')
-toggleMap.style.display = "none"
-
-function exibirToggleMap() {
-    toggleMap.style.display = "block"
-}
-
 async function carregarDados() {
     limparInput();
-    exibirToggleMap()
+    exibirFeedbackDados();
     const dados = await validarResposta();
     if (!dados) return;
 
      console.log('Dados carregados');
+     
     const tipos = [...new Set(dados.hosts.map(ponto => ponto.tipo))];
     // console.log('Tipos únicos:', tipos);
 
@@ -42,6 +107,8 @@ async function carregarDados() {
             
         }).setView(visaoDefault, 4);
     
+        exibirToggleMap()
+        
         const mapaPadrao = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
         });
@@ -80,10 +147,11 @@ async function carregarDados() {
             linesVisible = !linesVisible;
             if (linesVisible) {
                 linesLayer.addTo(map);
-                this.textContent = 'Ocultar relação';
+                this.style.border = '3px solid #0303ff';
             } else {
                 map.removeLayer(linesLayer);
-                this.textContent = 'Exibir relação';
+                this.style.border = '1px solid #313131';
+                
             }
         });
     } else {
@@ -91,36 +159,37 @@ async function carregarDados() {
         linesLayer.clearLayers();
     }
 
-    const listaSemLocalizacao = document.getElementById('sem-localizacao');
-    listaSemLocalizacao.innerHTML = '';
+ 
 
     const pontosMapeados = {};
     let zindex = '';
-    dados.hosts.forEach(ponto => {
-        if (ponto.local) {
-            const [lat, lng] = ponto.local.split(', ').map(Number);
 
-            if (ponto.ativo == 'red') {
-                zindex = 'z-index: 99999999999999999999;';
+        dados.hosts.forEach(ponto => {
+            if (ponto.local) {
+                const [lat, lng] = ponto.local.split(', ').map(Number);
+    
+                if (ponto.ativo == 'red') {
+                    zindex = 'z-index: 99999999999999999999;';
+                }
+                const iconeCustomizado = L.divIcon({
+                    className: 'custom-marker',
+                    html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue; cursor: grab;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })"/>`,
+                    iconSize: [0, 0],
+                    iconAnchor: [16, 30],
+                    popupAnchor: [0, -30]
+                });
+    
+                const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
+                    .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span></b>`);
+    
+                pontosMapeados[ponto.ip] = { lat, lng, marker };
+            } else {
+
             }
-            const iconeCustomizado = L.divIcon({
-                className: 'custom-marker',
-                html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })"/>`,
-                iconSize: [10, 30],
-                iconAnchor: [15, 30],
-                popupAnchor: [0, -30]
-            });
+        });
+        
+    
 
-            const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
-                .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span></b>`);
-
-            pontosMapeados[ponto.ip] = { lat, lng, marker };
-        } else {
-            const li = document.createElement('li');
-            li.innerHTML = `${ponto.nome} - <span class="latitude" style="color: ${ponto.ativo};">${ponto.ip}<span>`;
-            listaSemLocalizacao.appendChild(li);
-        }
-    });
 
     dados.hosts.forEach(ponto => {
         if (ponto.ship) {
@@ -146,64 +215,65 @@ async function carregarDados() {
 }
 
 
-async function atualizarDados() {
-    const response = await fetch('http://192.168.0.8:5000/status');
-    const dados = await response.json();
+// async function atualizarDados() {
+//     const response = await fetch('http://192.168.0.8:5000/status');
+//     const dados = await response.json();
 
-    markersLayer.clearLayers(); // Remove todos os marcadores existentes
-    linesLayer.clearLayers(); // Remove todas as linhas existentes
+//     markersLayer.clearLayers(); // Remove todos os marcadores existentes
+//     linesLayer.clearLayers(); // Remove todas as linhas existentes
 
-    const listaSemLocalizacao = document.getElementById('sem-localizacao');
-    listaSemLocalizacao.innerHTML = ''; // Limpa a lista antes de adicionar novos itens
+//     const listaSemLocalizacao = document.getElementById('sem-localizacao');
+//     listaSemLocalizacao.innerHTML = ''; // Limpa a lista antes de adicionar novos itens
 
-    const pontosMapeados = {};
+//     const pontosMapeados = {};
 
-    dados.hosts.forEach(ponto => {
-        if (ponto.local) {
-            const [lat, lng] = ponto.local.split(', ').map(Number);
+//     if (showIconesMaps == 1){
 
-            if (ponto.ativo == 'red') {
-                zindex = 'z-index: 99999999999999999999;'
-            }
-            // Criando um ícone com uma div para estilização
-            const iconeCustomizado = L.divIcon({
-                className: 'custom-marker', // Classe CSS
-                html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })" />`, // Ícone dentro da div
-                iconSize: [10, 30],
-                iconAnchor: [15, 30], // Ajuste para alinhar corretamente
-                popupAnchor: [0, -30]
-            });
+//         dados.hosts.forEach(ponto => {
+//             if (ponto.local) {
+//                 const [lat, lng] = ponto.local.split(', ').map(Number);
+    
+//                 if (ponto.ativo == 'red') {
+//                     zindex = 'z-index: 99999999999999999999;'
+//                 }
+//                 // Criando um ícone com uma div para estilização
+//                 const iconeCustomizado = L.divIcon({
+//                     className: 'custom-marker', // Classe CSS
+//                     html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })" />`, // Ícone dentro da div
+//                     iconSize: [10, 30],
+//                     iconAnchor: [15, 30], // Ajuste para alinhar corretamente
+//                     popupAnchor: [0, -30]
+//                 });
+    
+//                 const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
+//                     .bindPopup(`<b class="nomedosw">${ponto.nome} <br> <span class="latitude">${ponto.local}</span></b>`);
+    
+//                 pontosMapeados[ponto.ip] = { lat, lng, marker };
+//             } else {
+//                 const li = document.createElement('li');
+//                 li.innerHTML = `${ponto.nome} - <span class="latitude">${ponto.ip}<span>`;
+//                 listaSemLocalizacao.appendChild(li);
+//             }
+//         });
+//     }
 
-            const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
-                .bindPopup(`<b class="nomedosw">${ponto.nome} <br> <span class="latitude">${ponto.local}</span></b>`);
+//     // Desenhar linhas entre pontos conectados
+//     dados.hosts.forEach(ponto => {
+//         if (ponto.ship) {
+//             const ships = ponto.ship.split(', ');
+//             ships.forEach(ship => {
+//                 if (pontosMapeados[ponto.ip] && pontosMapeados[ship]) {
+//                     const ponto1 = pontosMapeados[ponto.ip];
+//                     const ponto2 = pontosMapeados[ship];
 
-            pontosMapeados[ponto.ip] = { lat, lng, marker };
-        } else {
-            const li = document.createElement('li');
-            li.innerHTML = `${ponto.nome} - <span class="latitude">${ponto.ip}<span>`;
-            listaSemLocalizacao.appendChild(li);
-        }
-    });
+//                     // console.log(`Desenhando linha entre ${ponto.ip} e ${ship}`);
+//                     // console.log(`Coordenadas: ${ponto1.lat}, ${ponto1.lng} -> ${ponto2.lat}, ${ponto2.lng}`);
 
-    // Desenhar linhas entre pontos conectados
-    dados.hosts.forEach(ponto => {
-        if (ponto.ship) {
-            const ships = ponto.ship.split(', ');
-            ships.forEach(ship => {
-                if (pontosMapeados[ponto.ip] && pontosMapeados[ship]) {
-                    const ponto1 = pontosMapeados[ponto.ip];
-                    const ponto2 = pontosMapeados[ship];
-
-                    // console.log(`Desenhando linha entre ${ponto.ip} e ${ship}`);
-                    // console.log(`Coordenadas: ${ponto1.lat}, ${ponto1.lng} -> ${ponto2.lat}, ${ponto2.lng}`);
-
-                    const linha = L.polyline([[ponto1.lat, ponto1.lng], [ponto2.lat, ponto2.lng]], { color: `${ponto.ativo}` }).addTo(linesLayer);
-                } else {
-                    // console.log(`Ponto não encontrado para ${ponto.ip} ou ${ship}`);
-                }
-            });
-        }
-    });
-}
-
-carregarDados();
+//                     const linha = L.polyline([[ponto1.lat, ponto1.lng], [ponto2.lat, ponto2.lng]], { color: `${ponto.ativo}` }).addTo(linesLayer);
+//                 } else {
+//                     // console.log(`Ponto não encontrado para ${ponto.ip} ou ${ship}`);
+//                 }
+//             });
+//         }
+//     });
+// }

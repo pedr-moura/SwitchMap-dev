@@ -17,16 +17,17 @@
         }
         .titulo {
           top: 0px;
-          height: 50px;
+          height: 60px;
           width: 100%;
           display: flex;
           position: fixed;
           align-items: center;
           z-index: 999999999;
-          background: rgba(119, 119, 119, 0.6); /* Tornando o fundo semi-transparente */
+          background: rgb(0 0 0 / 18%);
           justify-content: center;
-          backdrop-filter: blur(10px); /* Aplica o efeito de desfoque */
-          -webkit-backdrop-filter: blur(10px); /* Para compatibilidade com Safari */
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid #3b363659;
         }
         #creditos {
           color: #313131;
@@ -54,7 +55,7 @@
         }
         .container {
             min-width: 70%;
-            top: 3px;
+            top: 8px;
             width: fit-content;
             display: flex;
             gap: 20px;
@@ -87,7 +88,7 @@
             width: 290px;
             padding: 5px;
             text-align: center;
-            border-radius: 31px;
+            border-radius: 30px;
             border: 1px solid #808080;
             color: #808080;
             outline: none;
@@ -109,20 +110,27 @@
             position: absolute;
             right: 0px;
             font-size: 12px;
-            height: 300px;
-            width: 300px; 
+            height: auto;
+            width: 208px; 
             text-wrap: nowrap;
-            float: right; 
             overflow-y: auto; 
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            border: 2px solid #777;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid #3b363659;
             border-radius: 8px;   
             animation: slideFadeIn 0.3s ease-in;
-
+            padding: 10px;
+            li{
+              list-style: none;
+              padding: 5px;
+              border-radius: 5px;
+              color: #313131;
+            }
             li:hover{
-                background-color: #f1f1f1;
+                background-color: #00000018;
                 cursor: default;
+                color: #494949;
             }
         }
         @keyframes slideFadeIn {
@@ -166,18 +174,9 @@
             font-size: 90%;
             user-select: text;
         }
-        #icone-sw {
-            padding: 5px;
-            width: 20px;
-            background-color: rgb(240, 248, 255);
-            border-radius: 10px;
-        }
-        #icone-sw:hover {
-            opacity: 1;
-            background-color: rgb(222, 219, 219);
-        }
+
         .mudartipo {
-          
+
             position: absolute;
             z-index: 99999999;
             right: 20px;
@@ -203,8 +202,7 @@
         #mapToggleImage{
           border: 1px solid #808080;
           border-radius: 10px;
-          width: 130px;
-
+          width: 150px;
         }
             
         .leaflet-control-zoom{
@@ -241,11 +239,22 @@
         }
 
         #toggleLinesButton{
+          font-size: 14px;
+            width: 130px;
             background-color: #fff;
             border-radius: 50px;
             padding: 10px 15px;
-            min-width: 130px;
+            border: 1px solid #313131;
             
+        }
+        #toggleShowSwitches{
+          border: 1px solid #313131;
+          border-radius: 50px;
+          width: 46px;
+        }
+        #toggleShowSwitches img{
+          width: 30px;
+          border: none;
         }
         
         .loading{
@@ -428,3 +437,114 @@
       stroke-dashoffset: 0;
     }
   }
+
+  
+  .popup {
+    z-index: 999999999;
+    margin: 10px;
+    width: 300px;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+    border-radius: 4px;
+    padding: 5px 0;
+    font-weight: 300;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(20px);
+    }
+}
+
+.popup svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.popup-icon svg {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.close-icon {
+    margin-left: auto;
+}
+
+.close-svg {
+    cursor: pointer;
+}
+
+.close-path {
+    fill: grey;
+}
+
+/* SEPARATE STYLES */
+
+/* SUCCESS */
+.success-popup {
+    background-color: #edfbd8;
+    border: solid 1px #84d65a;
+}
+
+.success-icon path {
+    fill: #84d65a;
+}
+
+.success-message {
+    color: #2b641e;
+}
+
+/* ALERT */
+.alert-popup {
+    background-color: #fefce8;
+    border: solid 1px #facc15;
+}
+
+.alert-icon path {
+    fill: #facc15;
+}
+
+.alert-message {
+    color: #ca8a04;
+}
+
+/* ERROR */
+.error-popup {
+    background-color: #fef2f2;
+    border: solid 1px #f87171;
+}
+
+.error-icon path {
+    fill: #f87171;
+}
+
+.error-message {
+    color: #991b1b;
+}
+
+/* INFO */
+.info-popup {
+    background-color: #eff6ff;
+    border: solid 1px #1d4ed8;
+}
+
+.info-icon path {
+    fill: #1d4ed8;
+}
+
+.info-message {
+    color: #1d4ed8;
+}
+.pendente{
+  color: #b4b4b4;
+}

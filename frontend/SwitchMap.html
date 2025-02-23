@@ -27,7 +27,7 @@
         </div>
     </div>
     
-    <span id="creditos">Desenvolvido por <b>pedromoura.idr</b></span>
+    <span id="creditos">Desenvolvido por <b>Pedro Moura</b></span>
     
     <div class="titulo">
         <button id="update" onclick="carregarDados()"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -85,7 +85,7 @@
     </div>
     <div class="container">
 
-        <div class="opcoes">
+        <div class="opcoes" id="opcoes">
 
             <label for="ipBusca" class="pesquisa"> 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -93,34 +93,302 @@
                 </svg>
                 <input type="text" name="ipBusca" id="ipBusca" placeholder="Pesquisar por IP" onkeyup="pesquisarPorIP()">
             </label>
-
-            <button id="toggleLinesButton">Exibir relação</button>
-            <!-- <button id="toggleButton" onclick="ocultarLista()"></button> -->
-            <button id="toggleButton" onclick="ocultarLista()"></button>
             
+            <button id="toggleShowSwitches" onclick="showSw()"><img src="source/sw.png" alt=""></button>
+
+            
+            <button id="toggleLinesButton" onclick="countDependencias()">Dependencias</button>
+
+            <div class="menu">
+
+                            <!-- From Uiverse.io by pathikcomp --> 
+            <label class="main">
+                Atalhos
+                <input class="inp" checked="" type="checkbox" />
+                <div class="bar">
+                <span class="top bar-list"></span>
+                <span class="middle bar-list"></span>
+                <span class="bottom bar-list"></span>
+                </div>
+                <section class="menu-container">
+                <div class="menu-list" onclick="map.flyTo(visaoDefault, 4, { duration: 0.5 })"><b>Mapa geral</b></div>
+                <div class="menu-list" onclick="map.flyTo(imperatriz, 15, { duration: 0.5 })">Fabrica Imperatriz</div>
+                <div class="menu-list" onclick="map.flyTo(belem, 17, { duration: 0.5 })">Fabrica Belem</div>
+                <div class="menu-list" onclick="map.flyTo(aracruz, 15, { duration: 0.5 })">Fabrica Aracruz</div>
+                <div class="menu-list"><span class="pendente">Fabrica Jacarei</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Limeira</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Mogi</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Mucuri</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Ribas</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Suzano</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Tres Lagoas</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Rio Verde</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Maracanau</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Cach. Itapemirim</span></div>
+
+
+                </section>
+            </label>
+
+            <style>/* From Uiverse.io by pathikcomp */ 
+.main > .inp {
+  display: none;
+}
+.main {
+    color: white;
+    background-color: #313131;
+    padding: 3px 15px;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    width: 140px;
+    font-size: 14px;
+    position: relative;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.arrow {
+  height: 34%;
+  aspect-ratio: 1;
+  margin-block: auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.arrow::after,
+.arrow::before {
+  content: "";
+  position: absolute;
+  background-color: white;
+  height: 100%;
+  width: 2.5px;
+  border-radius: 500px;
+  transform-origin: bottom;
+}
+
+.arrow::after {
+  transform: rotate(35deg) translateX(-0.5px);
+}
+.arrow::before {
+  transform: rotate(-35deg) translateX(0.5px);
+}
+
+.main > .inp:checked + .arrow {
+  transform: rotateX(180deg);
+}
+
+.menu-container {
+  background-color: white;
+  color: #313131;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 130%;
+  overflow: hidden;
+  clip-path: inset(0% 0% 0% 0% round 10px);
+  transition: all 0.2s;
+}
+
+.menu-list {
+  --delay: 0.2s;
+  --trdelay: 0s;
+  padding: 8px 10px;
+  border-radius: inherit;
+  transition: background-color 0.2s 0s;
+  position: relative;
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.menu-list::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 95%;
+}
+
+.menu-list:hover {
+  background-color: rgb(223, 223, 223);
+}
+
+.inp:checked ~ .menu-container {
+  clip-path: inset(10% 50% 90% 50% round 10px);
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(1) {
+  transition:
+    transform 0.2s var(--delay),
+    opacity 0.2s var(--delay);
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(2) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 1)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 1));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(3) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 2)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 2));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(4) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 3)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 3));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(5) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 4)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 4));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(6) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 5)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 5));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(7) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 6)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 6));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(8) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 7)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 7));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(9) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 8)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 8));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(10) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 9)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 9));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(11) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 10)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 10));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(12) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 11)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 11));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(13) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 12)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 12));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(14) {
+  transition:
+    transform 0.2s calc(var(--delay) + (var(--trdelay) * 13)),
+    opacity 0.2s calc(var(--delay) + (var(--trdelay) * 13));
+}
+
+
+.bar-inp {
+  -webkit-appearance: none;
+  display: none;
+  visibility: hidden;
+}
+
+.bar {
+  display: flex;
+  height: 50%;
+  width: 20px;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.bar-list {
+  --transform: -25%;
+  display: block;
+  width: 100%;
+  height: 3px;
+  border-radius: 50px;
+  background-color: white;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.inp:not(:checked) ~ .bar > .top {
+  transform-origin: top right;
+  transform: translateY(var(--transform)) rotate(-45deg);
+}
+
+.inp:not(:checked) ~ .bar > .middle {
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.inp:not(:checked) ~ .bar > .bottom {
+  transform-origin: bottom right;
+  transform: translateY(calc(var(--transform) * -1)) rotate(45deg);
+}
+</style>
+  
+            </div>
+
         </div>
         
-        <div class="backgroundlista">
-            <div id="lista">
-                <div id="botoes-tipos" style="display: none;"></div>
-                <h3 style="display: none;">Itens sem Localização</h3>
-                <ul id="sem-localizacao" style="display: none;">
-
-
-
-                    
-                </ul>
-
-                <ul>
-                    <li onclick="map.setView(imperatriz, 16)">Fábrica Imperatriz</li>
-                </ul>
-            </div>
-           
-        </div>
-
     </div>
 
+    <div class="popup" id="popup">
+        <!-- From Uiverse.io by revanth-004 --> 
+        <div class="popup-container">
+            <div class="popup success-popup">
+                <div class="popup-icon success-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="success-svg">
+                        <path fill-rule="evenodd" d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14c.0878-.1004.1546-.21726.1966-.34383.0419-.12657.0581-.26026.0477-.39319-.0105-.13293-.0475-.26242-.1087-.38085-.0613-.11844-.1456-.22342-.2481-.30879-.1024-.08536-.2209-.14938-.3484-.18828s-.2616-.0519-.3942-.03823c-.1327.01366-.2612.05372-.3782.1178-.1169.06409-.2198.15091-.3027.25537l-4.3 5.159-2.225-2.226c-.1886-.1822-.4412-.283-.7034-.2807s-.51301.1075-.69842.2929-.29058.4362-.29285.6984c-.00228.2622.09851.5148.28067.7034l3 3c.0983.0982.2159.1748.3454.2251.1295.0502.2681.0729.4069.0665.1387-.0063.2747-.0414.3991-.1032.1244-.0617.2347-.1487.3236-.2554z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <div class="success-message">Dados Carregados</div>
+                <div class="popup-icon close-icon" onclick="fecharFeedbackDados()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true" class="close-svg">
+                        <path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" class="close-path"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+      
+        <style>
 
+        </style>
+
+        <script>
+
+        </script>
+    </div>
+    
+    
+    
 
     <div class="loading" id="loading">
 <!-- From Uiverse.io by Nawsome --> 
@@ -194,12 +462,14 @@
 
     </div>
 
+    <div id="css-sw"></div>
+
+        <script src="source/script/info.js"></script>
         <script src="source/script/open.js"></script>
         <script src="source/script/scriptDados.js"></script>
         <script src="source/script/manipularMapa.js"></script>
-        <script src="source/script/info.js"></script>
         <script src="source/script/error.js"></script>
-
         <script src="source/script/credits.js"></script>
+        
 </body>
 </html>
