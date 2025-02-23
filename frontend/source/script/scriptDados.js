@@ -1,5 +1,3 @@
-
-
 async function validarResposta() {
     try {
         const response = await fetch('http://192.168.0.8:5000/status');
@@ -18,20 +16,31 @@ async function validarResposta() {
     }
 }
 
+const toggleMap = document.getElementById('mudartipo')
+toggleMap.style.display = "none"
+
+function exibirToggleMap() {
+    toggleMap.style.display = "block"
+}
+
 async function carregarDados() {
     limparInput();
-    
+    exibirToggleMap()
     const dados = await validarResposta();
     if (!dados) return;
 
-    // console.log('Dados carregados:', dados);
+     console.log('Dados carregados');
     const tipos = [...new Set(dados.hosts.map(ponto => ponto.tipo))];
     // console.log('Tipos únicos:', tipos);
 
     if (!map) {
         map = L.map('map', {
-            maxZoom: 17
-        }).setView([-5.41748713266883, -47.567331471508695], 16);
+            maxZoom: 17,
+            zoomControl: false,
+            doubleClickZoom: false,
+            attributionControl: false
+            
+        }).setView(visaoDefault, 4);
     
         const mapaPadrao = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
@@ -46,13 +55,20 @@ async function carregarDados() {
         markersLayer = L.layerGroup().addTo(map);
         linesLayer = L.layerGroup();
     
-        document.getElementById('mapToggle').addEventListener('change', function () {
-            if (this.checked) {
-                map.removeLayer(mapaPadrao);
-                mapaSatelite.addTo(map);
-            } else {
+        document.getElementById('mapToggleImage').addEventListener('click', function () {
+            // Verificando o estado da camada (pode ser alternado por algum estado previamente armazenado)
+            const isSatelliteActive = map.hasLayer(mapaSatelite);
+    
+            if (isSatelliteActive) {
                 map.removeLayer(mapaSatelite);
                 mapaPadrao.addTo(map);
+                // Alterando a imagem para representar o mapa padrão
+                document.getElementById('mapToggleImage').src = 'source/sat.png';
+            } else {
+                map.removeLayer(mapaPadrao);
+                mapaSatelite.addTo(map);
+                // Alterando a imagem para representar o mapa de satélite
+                document.getElementById('mapToggleImage').src = 'source/map.png';
             }
         });
     
@@ -89,7 +105,7 @@ async function carregarDados() {
             }
             const iconeCustomizado = L.divIcon({
                 className: 'custom-marker',
-                html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" />`,
+                html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })"/>`,
                 iconSize: [10, 30],
                 iconAnchor: [15, 30],
                 popupAnchor: [0, -30]
@@ -152,7 +168,7 @@ async function atualizarDados() {
             // Criando um ícone com uma div para estilização
             const iconeCustomizado = L.divIcon({
                 className: 'custom-marker', // Classe CSS
-                html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" />`, // Ícone dentro da div
+                html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })" />`, // Ícone dentro da div
                 iconSize: [10, 30],
                 iconAnchor: [15, 30], // Ajuste para alinhar corretamente
                 popupAnchor: [0, -30]

@@ -84,7 +84,9 @@ const lista = document.getElementById('lista');
 
 function ocultarLista() {
     lista.classList.toggle('hidden');
-    toggleButton.textContent = lista.classList.contains('hidden') ? 'Exibir outros' : 'Minimizar';
+    toggleButton.textContent = lista.classList.contains('hidden') ? 'Unidades' : 'Ocultar';
+    
+    map.setView(visaoDefault, 4)
 }
 
 ocultarLista();

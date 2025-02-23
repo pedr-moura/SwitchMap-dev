@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="source/style.css">
 
+    <script src="source/script/locaisDeafult.js"></script>
 </head>
 <body>
     <!-- Desenvolvido por pedromoura.idr@suzano.com.br -->
@@ -20,8 +21,14 @@
     
     <div id="map"></div>
 
-
-
+    <div class="mudartipo" id="mudartipo">
+        <div class="checkbox-wrapper-4">
+            <img src="source/sat.PNG" id="mapToggleImage" alt="Alternar mapa" style="cursor: pointer;" onclick="alterarCor()"/>
+        </div>
+    </div>
+    
+    <span id="creditos">Desenvolvido por <b>pedromoura.idr</b></span>
+    
     <div class="titulo">
         <button id="update" onclick="carregarDados()"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
             width="155.724px" height="155.723px" viewBox="0 0 155.724 155.723" style="enable-background:new 0 0 155.724 155.723;"
@@ -74,8 +81,7 @@
 
        <div id="dataHora"></div>
        </button>
-        <h1 style="opacity: 0.1;">Mapeamento SW - UNFMA</h1>
-        <span>Desenvolvido por pedromoura.idr@suzano.com.br</span>
+        
     </div>
     <div class="container">
 
@@ -88,38 +94,25 @@
                 <input type="text" name="ipBusca" id="ipBusca" placeholder="Pesquisar por IP" onkeyup="pesquisarPorIP()">
             </label>
 
-            <div class="mudartipo">
-                <div class="checkbox-wrapper-4">
-                    <input type="checkbox" id="mapToggle" class="inp-cbx" />
-                    <label for="mapToggle" class="cbx">
-                        <span>
-                            <svg height="10px" width="12px">
-                                <symbol viewBox="0 0 12 10" id="check-4">
-                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                </symbol>
-                            </svg>
-                        </span>
-                        <span>Satélite</span>
-                    </label>
-                    <svg class="inline-svg">
-                        <symbol viewBox="0 0 12 10" id="check-4">
-                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                        </symbol>
-                    </svg>
-                </div>
-            </div>
-            <button id="toggleButton" onclick="ocultarLista()"></button>
-
             <button id="toggleLinesButton">Exibir relação</button>
+            <!-- <button id="toggleButton" onclick="ocultarLista()"></button> -->
+            <button id="toggleButton" onclick="ocultarLista()"></button>
+            
         </div>
         
         <div class="backgroundlista">
             <div id="lista">
-               
-    <div id="botoes-tipos"></div>
-                <h3>Itens sem Localização</h3>
-                <ul id="sem-localizacao">
+                <div id="botoes-tipos" style="display: none;"></div>
+                <h3 style="display: none;">Itens sem Localização</h3>
+                <ul id="sem-localizacao" style="display: none;">
 
+
+
+                    
+                </ul>
+
+                <ul>
+                    <li onclick="map.setView(imperatriz, 16)">Fábrica Imperatriz</li>
                 </ul>
             </div>
            
@@ -206,5 +199,7 @@
         <script src="source/script/manipularMapa.js"></script>
         <script src="source/script/info.js"></script>
         <script src="source/script/error.js"></script>
+
+        <script src="source/script/credits.js"></script>
 </body>
 </html>
