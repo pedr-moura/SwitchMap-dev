@@ -481,7 +481,7 @@
 }
 
 .close-svg {
-    cursor: pointer;
+    cursor: default;
 }
 
 .close-path {
@@ -563,7 +563,7 @@
     width: 140px;
     font-size: 14px;
     position: relative;
-    cursor: pointer;
+    cursor: default;
     justify-content: space-between;
 }
 
