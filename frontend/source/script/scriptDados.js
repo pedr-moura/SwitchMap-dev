@@ -95,7 +95,7 @@ async function validarResposta() {
 }
 
 async function carregarDados() {
-    limparInput();
+//    limparInput();
     const dados = await validarResposta();
     if (!dados) return;
 
