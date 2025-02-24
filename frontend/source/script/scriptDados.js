@@ -125,17 +125,20 @@ async function carregarDados() {
         document.getElementById('mapToggleImage').addEventListener('click', function () {
             // Verificando o estado da camada (pode ser alternado por algum estado previamente armazenado)
             const isSatelliteActive = map.hasLayer(mapaSatelite);
-    
+
+
+            //https://i.ibb.co/tw1NmdH2/map.png
+            //https://i.ibb.co/1fMLrbg5/sat.png
             if (isSatelliteActive) {
                 map.removeLayer(mapaSatelite);
                 mapaPadrao.addTo(map);
                 // Alterando a imagem para representar o mapa padrão
-                document.getElementById('mapToggleImage').src = 'source/sat.png';
+                document.getElementById('mapToggleImage').src = 'https://i.ibb.co/1fMLrbg5/sat.png';
             } else {
                 map.removeLayer(mapaPadrao);
                 mapaSatelite.addTo(map);
                 // Alterando a imagem para representar o mapa de satélite
-                document.getElementById('mapToggleImage').src = 'source/map.png';
+                document.getElementById('mapToggleImage').src = 'https://i.ibb.co/tw1NmdH2/map.png';
             }
         });
     
