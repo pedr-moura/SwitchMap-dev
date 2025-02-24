@@ -176,7 +176,7 @@ async function carregarDados() {
                 }
                 const iconeCustomizado = L.divIcon({
                     className: 'custom-marker',
-                    html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue; cursor: grab;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })"/>`,
+                    html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue; cursor: grab;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })"/>`,
                     iconSize: [0, 0],
                     iconAnchor: [16, 30],
                     popupAnchor: [0, -30]
@@ -242,7 +242,7 @@ async function carregarDados() {
 //                 // Criando um ícone com uma div para estilização
 //                 const iconeCustomizado = L.divIcon({
 //                     className: 'custom-marker', // Classe CSS
-//                     html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })" />`, // Ícone dentro da div
+//                     html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })" />`, // Ícone dentro da div
 //                     iconSize: [10, 30],
 //                     iconAnchor: [15, 30], // Ajuste para alinhar corretamente
 //                     popupAnchor: [0, -30]
