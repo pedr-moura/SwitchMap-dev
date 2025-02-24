@@ -130,12 +130,12 @@ async function carregarDados() {
                 map.removeLayer(mapaSatelite);
                 mapaPadrao.addTo(map);
                 // Alterando a imagem para representar o mapa padrão
-                document.getElementById('mapToggleImage').src = 'https://switch-map-dev-git-main-pedromouras-projects.vercel.app/frontend/source/sat.png';
+                document.getElementById('mapToggleImage').src = 'source/sat.png';
             } else {
                 map.removeLayer(mapaPadrao);
                 mapaSatelite.addTo(map);
                 // Alterando a imagem para representar o mapa de satélite
-                document.getElementById('mapToggleImage').src = 'https://switch-map-dev-git-main-pedromouras-projects.vercel.app/frontend/source/map.png';
+                document.getElementById('mapToggleImage').src = 'source/map.png';
             }
         });
     
