@@ -40,10 +40,6 @@ function fecharPopups() {
   }
 }
 
-const menuList = document.querySelector('.menu-list');
-
-menuList.addEventListener('click', fecharPopups);
-
 function showSw() {
     if (showIconesMaps == 0) {
 
@@ -249,6 +245,10 @@ const menuContainer = document.getElementById('menu-container')
                 <div class="menu-list"><span class="pendente">Fabrica Cach. Itapemirim</span></div>
 
                     `
+
+
+const menuList = document.querySelector('.menu-list');
+menuList.addEventListener('click', fecharPopups);
 
 
 // async function atualizarDados() {
