@@ -40,6 +40,9 @@ function fecharPopups() {
   }
 }
 
+const menuList = document.querySelector('.menu-list');
+
+menuList.addEventListener('click', fecharPopups);
 
 function showSw() {
     if (showIconesMaps == 0) {
