@@ -89,12 +89,12 @@ async function validarResposta() {
 
 async function carregarDados() {
     limparInput();
-    exibirFeedbackDados();
     const dados = await validarResposta();
     if (!dados) return;
 
      console.log('Dados carregados');
-     
+    exibirFeedbackDados();
+    
     const tipos = [...new Set(dados.hosts.map(ponto => ponto.tipo))];
     // console.log('Tipos únicos:', tipos);
 
