@@ -228,6 +228,28 @@ async function carregarDados() {
     // console.log('dados carregados');
 }
 
+//lista de atalhos
+const menuContainer = document.getElementById('menu-container')
+
+                    menuContainer.innerHTML = `
+                                       
+                <div class="menu-list" onclick="map.setMaxZoom(18).flyTo(visaoDefault, 4, { duration: 0.5 })"><b>Mapa geral</b></div>
+                <div class="menu-list" onclick="map.setMaxZoom(17).flyTo(imperatriz, 15, { duration: 0.5 })">Fabrica Imperatriz</div>
+                <div class="menu-list" onclick="map.setMaxZoom(18).flyTo(belem, 18, { duration: 0.5 })">Fabrica Belem</div>
+                <div class="menu-list" onclick="map.setMaxZoom(18).flyTo(aracruz, 16, { duration: 0.5 })">Fabrica Aracruz</div>
+                <div class="menu-list"><span class="pendente">Fabrica Jacarei</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Limeira</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Mogi</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Mucuri</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Ribas</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Suzano</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Tres Lagoas</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Rio Verde</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Maracanau</span></div>
+                <div class="menu-list"><span class="pendente">Fabrica Cach. Itapemirim</span></div>
+
+                    `
+
 
 // async function atualizarDados() {
 //     const response = await fetch('http://192.168.0.8:5000/status');
