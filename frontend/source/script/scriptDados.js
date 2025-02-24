@@ -94,20 +94,6 @@ async function validarResposta() {
     }
 }
 
-function limparInput() {
-    document.getElementById("ipBusca").value = "";
-}
-
-function exibirFeedbackDados() {
-    feedbackDados.style.display = 'block';
-    setTimeout(() => {
-        feedbackDados.style.display = 'none';
-    }, 3000); // 3 segundos (3000 milissegundos)
-}
-
-function fecharFeedbackDados() {
-    feedbackDados.style.display = 'none';
-}
 
 async function carregarDados() {
     limparInput();
