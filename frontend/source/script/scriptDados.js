@@ -71,7 +71,7 @@ carregarDados()
 
 async function validarResposta() {
     try {
-        const response = await fetch('http://192.168.0.8:5000/status');
+        const response = await fetch('http://172.16.208.74:5000/status');
         const dados = await response.json();
         
         if (dados.erro) {
