@@ -33,6 +33,14 @@ function  ocultarSw() {
 }
 ocultarSw()
 
+function fecharPopups() {
+  const buttonsFecharInfo = document.getElementsByClassName('leaflet-popup-close-button');
+  for (let button of buttonsFecharInfo) {
+    button.click();
+  }
+}
+
+
 function showSw() {
     if (showIconesMaps == 0) {
 
