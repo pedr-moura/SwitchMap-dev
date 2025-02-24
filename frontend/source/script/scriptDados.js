@@ -229,7 +229,7 @@ const menuContainer = document.getElementById('menu-container')
 
                     menuContainer.innerHTML = `
                                        
-                <div class="menu-list" onclick="map.setMaxZoom(18).flyTo(visaoDefault, 4, { duration: 0.5 })"><b>Mapa geral</b></div>
+                <div class="menu-list" onclick="map.setMaxZoom(17).flyTo(visaoDefault, 4, { duration: 0.5 })"><b>Mapa geral</b></div>
                 <div class="menu-list" onclick="map.setMaxZoom(17).flyTo(imperatriz, 15, { duration: 0.5 })">Fabrica Imperatriz</div>
                 <div class="menu-list" onclick="map.setMaxZoom(18).flyTo(belem, 18, { duration: 0.5 })">Fabrica Belem</div>
                 <div class="menu-list" onclick="map.setMaxZoom(18).flyTo(aracruz, 16, { duration: 0.5 })">Fabrica Aracruz</div>
