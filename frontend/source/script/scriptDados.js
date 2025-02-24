@@ -1,3 +1,6 @@
+import "./info.js";
+import "./open.js";
+
 const toggleMap = document.getElementById('mudartipo')
 const toggleSwView = document.getElementById('toggleShowSwitches')
 const toggleDependencias = document.getElementById('toggleLinesButton')
