@@ -1,6 +1,3 @@
-import "./info.js";
-import "./open.js";
-import "./manipularMapa.js";
 
 const toggleMap = document.getElementById('mudartipo')
 const toggleSwView = document.getElementById('toggleShowSwitches')
