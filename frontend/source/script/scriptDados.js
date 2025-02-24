@@ -100,7 +100,7 @@ async function carregarDados() {
     if (!dados) return;
 
      console.log('Dados carregados');
-    exibirFeedbackDados();
+   // exibirFeedbackDados();
     
     const tipos = [...new Set(dados.hosts.map(ponto => ponto.tipo))];
     // console.log('Tipos únicos:', tipos);
