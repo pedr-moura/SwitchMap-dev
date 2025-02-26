@@ -109,7 +109,7 @@ async function carregarDados() {
 
     if (!map) {
         map = L.map('map', {
-            maxZoom: 17,
+            maxZoom: 18,
             zoomControl: false,
             doubleClickZoom: false,
             attributionControl: false
