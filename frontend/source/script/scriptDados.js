@@ -187,7 +187,7 @@ async function carregarDados() {
                     className: 'custom-marker',
                     html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue; cursor: grab;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })"/>`,
                     iconSize: [0, 0],
-                    iconAnchor: [16, 30],
+                    iconAnchor: [15, 30],
                     popupAnchor: [0, -30]
                 });
     
@@ -253,65 +253,65 @@ const menuList = document.querySelector('.menu-list');
 menuList.addEventListener('click', fecharPopups);
 
 
-// async function atualizarDados() {
-//     const response = await fetch('http://192.168.0.8:5000/status');
-//     const dados = await response.json();
+async function atualizarDados() {
+    const response = await fetch('http://192.168.0.8:5000/status');
+    const dados = await response.json();
 
-//     markersLayer.clearLayers(); // Remove todos os marcadores existentes
-//     linesLayer.clearLayers(); // Remove todas as linhas existentes
+    markersLayer.clearLayers(); // Remove todos os marcadores existentes
+    linesLayer.clearLayers(); // Remove todas as linhas existentes
 
-//     const listaSemLocalizacao = document.getElementById('sem-localizacao');
-//     listaSemLocalizacao.innerHTML = ''; // Limpa a lista antes de adicionar novos itens
+    const listaSemLocalizacao = document.getElementById('sem-localizacao');
+    listaSemLocalizacao.innerHTML = ''; // Limpa a lista antes de adicionar novos itens
 
-//     const pontosMapeados = {};
+    const pontosMapeados = {};
 
-//     if (showIconesMaps == 1){
+    if (showIconesMaps == 1){
 
-//         dados.hosts.forEach(ponto => {
-//             if (ponto.local) {
-//                 const [lat, lng] = ponto.local.split(', ').map(Number);
+        dados.hosts.forEach(ponto => {
+            if (ponto.local) {
+                const [lat, lng] = ponto.local.split(', ').map(Number);
     
-//                 if (ponto.ativo == 'red') {
-//                     zindex = 'z-index: 99999999999999999999;'
-//                 }
-//                 // Criando um ícone com uma div para estilização
-//                 const iconeCustomizado = L.divIcon({
-//                     className: 'custom-marker', // Classe CSS
-//                     html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })" />`, // Ícone dentro da div
-//                     iconSize: [10, 30],
-//                     iconAnchor: [15, 30], // Ajuste para alinhar corretamente
-//                     popupAnchor: [0, -30]
-//                 });
+                if (ponto.ativo == 'red') {
+                    zindex = 'z-index: 99999999999999999999;'
+                }
+                // Criando um ícone com uma div para estilização
+                const iconeCustomizado = L.divIcon({
+                    className: 'custom-marker', // Classe CSS
+                    html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })" />`, // Ícone dentro da div
+                    iconSize: [0, 0],
+                    iconAnchor: [15, 30], // Ajuste para alinhar corretamente
+                    popupAnchor: [0, -30]
+                });
     
-//                 const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
-//                     .bindPopup(`<b class="nomedosw">${ponto.nome} <br> <span class="latitude">${ponto.local}</span></b>`);
+                const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
+                    .bindPopup(`<b class="nomedosw">${ponto.nome} <br> <span class="latitude">${ponto.local}</span></b>`);
     
-//                 pontosMapeados[ponto.ip] = { lat, lng, marker };
-//             } else {
-//                 const li = document.createElement('li');
-//                 li.innerHTML = `${ponto.nome} - <span class="latitude">${ponto.ip}<span>`;
-//                 listaSemLocalizacao.appendChild(li);
-//             }
-//         });
-//     }
+                pontosMapeados[ponto.ip] = { lat, lng, marker };
+            } else {
+                const li = document.createElement('li');
+                li.innerHTML = `${ponto.nome} - <span class="latitude">${ponto.ip}<span>`;
+                listaSemLocalizacao.appendChild(li);
+            }
+        });
+    }
 
-//     // Desenhar linhas entre pontos conectados
-//     dados.hosts.forEach(ponto => {
-//         if (ponto.ship) {
-//             const ships = ponto.ship.split(', ');
-//             ships.forEach(ship => {
-//                 if (pontosMapeados[ponto.ip] && pontosMapeados[ship]) {
-//                     const ponto1 = pontosMapeados[ponto.ip];
-//                     const ponto2 = pontosMapeados[ship];
+    // Desenhar linhas entre pontos conectados
+    dados.hosts.forEach(ponto => {
+        if (ponto.ship) {
+            const ships = ponto.ship.split(', ');
+            ships.forEach(ship => {
+                if (pontosMapeados[ponto.ip] && pontosMapeados[ship]) {
+                    const ponto1 = pontosMapeados[ponto.ip];
+                    const ponto2 = pontosMapeados[ship];
 
-//                     // console.log(`Desenhando linha entre ${ponto.ip} e ${ship}`);
-//                     // console.log(`Coordenadas: ${ponto1.lat}, ${ponto1.lng} -> ${ponto2.lat}, ${ponto2.lng}`);
+                    // console.log(`Desenhando linha entre ${ponto.ip} e ${ship}`);
+                    // console.log(`Coordenadas: ${ponto1.lat}, ${ponto1.lng} -> ${ponto2.lat}, ${ponto2.lng}`);
 
-//                     const linha = L.polyline([[ponto1.lat, ponto1.lng], [ponto2.lat, ponto2.lng]], { color: `${ponto.ativo}` }).addTo(linesLayer);
-//                 } else {
-//                     // console.log(`Ponto não encontrado para ${ponto.ip} ou ${ship}`);
-//                 }
-//             });
-//         }
-//     });
-// }
+                    const linha = L.polyline([[ponto1.lat, ponto1.lng], [ponto2.lat, ponto2.lng]], { color: `${ponto.ativo}` }).addTo(linesLayer);
+                } else {
+                    // console.log(`Ponto não encontrado para ${ponto.ip} ou ${ship}`);
+                }
+            });
+        }
+    });
+}
