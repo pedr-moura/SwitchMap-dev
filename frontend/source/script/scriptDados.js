@@ -185,7 +185,7 @@ async function carregarDados() {
                 }
                 const iconeCustomizado = L.divIcon({
                     className: 'custom-marker',
-                    html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue; cursor: grab;" onclick="map.flyTo([${lat}, ${lng}], auto, { duration: 0.5 })"/>`,
+                    html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue; cursor: grab;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })"/>`,
                     iconSize: [0, 0],
                     iconAnchor: [16, 30],
                     popupAnchor: [0, -30]
