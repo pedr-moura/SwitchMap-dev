@@ -25,7 +25,7 @@ function exibirNoMapaPorIP(ipBusca, dados) {
              // Criando um ícone com uma div para estilização
              const iconeCustomizado = L.divIcon({
                 className: 'custom-marker', // Classe CSS
-                html: `<img src="./source/sw.png" id="icone-sw" style="border: 2px solid ${resultado.ativo}; box-shadow: inset 0 0 0 1.5px blue; " />`, // Ícone dentro da div
+                html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${resultado.ativo}; box-shadow: inset 0 0 0 1.5px blue; " />`, // Ícone dentro da div
                 iconSize: [10, 30],
                 iconAnchor: [15, 30], // Ajuste para alinhar corretamente
                 popupAnchor: [0, -30]
