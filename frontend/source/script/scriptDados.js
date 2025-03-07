@@ -191,8 +191,13 @@ async function carregarDados() {
                     popupAnchor: [0, -30]
                 });
 
+                let info = '';
+                
+                if (ponto.valores){
+                    info = `CPU: ${ponto.valores[0]}`;
+                }
                     const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
-                    .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span>  </b>`);
+                    .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> ${info} </b>`);
     
                 pontosMapeados[ponto.ip] = { lat, lng, marker };
                 
