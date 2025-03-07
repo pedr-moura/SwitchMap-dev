@@ -194,7 +194,7 @@ async function carregarDados() {
                 let info = '';
                 
                 if (ponto.valores){
-                    info = `CPU: ${ponto.valores[0]}`;
+                    info = ` <br> <span style="font-size: 12px;"> CPU: ${ponto.valores[0]} - Latencia: ${ponto.valores[2]} </span>`;
                 }
                     const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
                     .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> ${info} </b>`);
