@@ -192,7 +192,7 @@ async function carregarDados() {
                 });
     
                 const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
-                    .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> - ${ponto.valores[0]} </b>`);
+                    .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> - CPU: ${ponto.valores[0]} </b>`);
     
                 pontosMapeados[ponto.ip] = { lat, lng, marker };
             } else {
