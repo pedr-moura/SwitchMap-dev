@@ -79,7 +79,7 @@ carregarDados()
 
 async function validarResposta() {
     try {
-        const response = await fetch('http://172.16.196.36:8000/status');
+        const response = await fetch('http://172.16.196.36:5000/status');
         const dados = await response.json();
         
         if (dados.erro) {
@@ -192,7 +192,7 @@ async function carregarDados() {
                 });
     
                 const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
-                    .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span></b>`);
+                    .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> - ${ponto.valores[0]} </b>`);
     
                 pontosMapeados[ponto.ip] = { lat, lng, marker };
             } else {
