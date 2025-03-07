@@ -190,10 +190,21 @@ async function carregarDados() {
                     iconAnchor: [15, 30],
                     popupAnchor: [0, -30]
                 });
-    
-                const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
+
+                if (ponto.valores && ponto.valores[0]) {
+                    
+                    const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
                     .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> <br> 
                     <span>CPU: ${ponto.valores[0]} - Latencia: ${ponto.valores[2]}</span> </b>`);
+                    
+                    } else {
+                    
+                    const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
+                    .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span>  </b>`);
+                    
+                    }
+
+
     
                 pontosMapeados[ponto.ip] = { lat, lng, marker };
             } else {
