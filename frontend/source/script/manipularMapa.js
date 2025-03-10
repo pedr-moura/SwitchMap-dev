@@ -42,7 +42,7 @@ function exibirNoMapaPorIP(ipBusca, dados) {
 //             }
 
             const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
-                .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> ${info} </b>`);
+                .bindPopup(`<b class="nomedosw" style="color: ${resultado.ativo};">${resultado.nome} <br> <span class="latitude">${resultado.local}</span> ${info} </b>`);
 
             pontosMapeados[resultado.ip] = { lat, lng, marker };
         }
