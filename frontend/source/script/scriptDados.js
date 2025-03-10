@@ -101,9 +101,9 @@ async function carregarDados() {
     const dados = await validarResposta();
     if (!dados) return;
 
-     console.log('Dados carregados');
+    console.log('Dados carregados');
     exibirFeedbackDados();
-    
+
     const tipos = [...new Set(dados.hosts.map(ponto => ponto.tipo))];
     // console.log('Tipos únicos:', tipos);
 
@@ -113,48 +113,41 @@ async function carregarDados() {
             zoomControl: false,
             doubleClickZoom: false,
             attributionControl: false
-            
         }).setView(visaoDefault, 4);
-    
-        exibirToggleMap()
-        
+
+        exibirToggleMap();
+
         const mapaPadrao = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
         });
-    
+
         const mapaSatelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri'
         });
-    
+
         mapaPadrao.addTo(map);
-    
+
         markersLayer = L.layerGroup().addTo(map);
         linesLayer = L.layerGroup();
-    
+
         document.getElementById('mapToggleImage').addEventListener('click', function () {
-            // Verificando o estado da camada (pode ser alternado por algum estado previamente armazenado)
             const isSatelliteActive = map.hasLayer(mapaSatelite);
 
-
-            //https://i.ibb.co/tw1NmdH2/map.png
-            //https://i.ibb.co/1fMLrbg5/sat.png
             if (isSatelliteActive) {
                 map.removeLayer(mapaSatelite);
                 mapaPadrao.addTo(map);
-                // Alterando a imagem para representar o mapa padrão
                 document.getElementById('mapToggleImage').src = 'https://i.ibb.co/1fMLrbg5/sat.png';
             } else {
                 map.removeLayer(mapaPadrao);
                 mapaSatelite.addTo(map);
-                // Alterando a imagem para representar o mapa de satélite
                 document.getElementById('mapToggleImage').src = 'https://i.ibb.co/tw1NmdH2/map.png';
             }
         });
-    
+
         document.getElementById('ipBusca').addEventListener('input', function () {
             pesquisarPorIP(dados.hosts);
         });
-    
+
         document.getElementById('toggleLinesButton').addEventListener('click', function () {
             linesVisible = !linesVisible;
             if (linesVisible) {
@@ -163,7 +156,6 @@ async function carregarDados() {
             } else {
                 map.removeLayer(linesLayer);
                 this.style.border = '1px solid #313131';
-                
             }
         });
     } else {
@@ -171,43 +163,46 @@ async function carregarDados() {
         linesLayer.clearLayers();
     }
 
- 
-
     const pontosMapeados = {};
     let zindex = '';
 
-        dados.hosts.forEach(ponto => {
-            if (ponto.local) {
-                const [lat, lng] = ponto.local.split(', ').map(Number);
-    
-                if (ponto.ativo == 'red') {
-                    zindex = 'z-index: 99999999999999999999;';
-                }
-                const iconeCustomizado = L.divIcon({
-                    className: 'custom-marker',
-                    html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue; cursor: grab;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })"/>`,
-                    iconSize: [0, 0],
-                    iconAnchor: [15, 30],
-                    popupAnchor: [0, -30]
-                });
+    dados.hosts.forEach(ponto => {
+        if (ponto.local) {
+            const [lat, lng] = ponto.local.split(', ').map(Number);
 
-                let info = '';
-                
-                if (ponto.valores){
-                    info = ` <br> <span style="font-size: 11px;">T: <b>${ponto.temp[0]} - CPU: <b>${ponto.valores[0]}% - Latencia: <b>${ponto.valores[2]}ms</b> </span>`;
-                }
-                    const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
-                    .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> ${info} </b>`);
-    
-                pontosMapeados[ponto.ip] = { lat, lng, marker };
-                
-            } else {
-
+            if (ponto.ativo == 'red') {
+                zindex = 'z-index: 99999999999999999999;';
             }
-        });
-        
-    
 
+            // Lógica para encontrar o maior valor com "C" em ponto.valores
+            let maiorValorC = null;
+            if (ponto.valores) {
+                const valoresComC = ponto.valores.filter(valor => valor.includes('C'));
+                if (valoresComC.length > 0) {
+                    const valoresNumericos = valoresComC.map(valor => parseFloat(valor));
+                    maiorValorC = Math.max(...valoresNumericos);
+                }
+            }
+
+            const iconeCustomizado = L.divIcon({
+                className: 'custom-marker',
+                html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${ponto.ativo}; ${zindex} box-shadow: inset 0 0 0 1.5px blue; cursor: grab;" onclick="map.flyTo([${lat}, ${lng}], 17, { duration: 0.5 })"/>`,
+                iconSize: [0, 0],
+                iconAnchor: [15, 30],
+                popupAnchor: [0, -30]
+            });
+
+            let info = '';
+            if (ponto.valores) {
+                info = `<br> <span style="font-size: 11px;">T: <b>${maiorValorC !== null ? maiorValorC : 'N/A'} - CPU: <b>${ponto.valores[0]}% - Latencia: <b>${ponto.valores[2]}ms</b> </span>`;
+            }
+
+            const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
+                .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> ${info} </b>`);
+
+            pontosMapeados[ponto.ip] = { lat, lng, marker };
+        }
+    });
 
     dados.hosts.forEach(ponto => {
         if (ponto.ship) {
@@ -217,19 +212,13 @@ async function carregarDados() {
                     const ponto1 = pontosMapeados[ponto.ip];
                     const ponto2 = pontosMapeados[ship];
 
-                    // console.log(`Desenhando linha entre ${ponto.ip} e ${ship}`);
-                    // console.log(`Coordenadas: ${ponto1.lat}, ${ponto1.lng} -> ${ponto2.lat}, ${ponto2.lng}`);
-
                     L.polyline([[ponto1.lat, ponto1.lng], [ponto2.lat, ponto2.lng]], { color: `${ponto.ativo}` }).addTo(linesLayer);
-                } else {
-                    // console.log(`Ponto não encontrado para ${ponto.ip} ou ${ship}`);
                 }
             });
         }
     });
 
     exibirDataHora();
-    // console.log('dados carregados');
 }
 
 //lista de atalhos
