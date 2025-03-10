@@ -30,16 +30,16 @@ function exibirNoMapaPorIP(ipBusca, dados) {
                 iconAnchor: [15, 30], // Ajuste para alinhar corretamente
                 popupAnchor: [0, -30]
             });
-            let info = '';
-            if (ponto.valores) {
-                info = `<br><br>
-<span style="font-size: 12px; color: gray;">
-  🌡️ Temp: <b>${maiorValorC !== null ? maiorValorC + '°C' : 'N/A'}</b> | 
-  💻 CPU: <b>${ponto.valores[0]}%</b> | 
-  📶 Lat: <b>${ponto.valores[2]}ms</b>
-</span>
-`;
-            }
+//             let info = '';
+//             if (ponto.valores) {
+//                 info = `<br><br>
+// <span style="font-size: 12px; color: gray;">
+//   🌡️ Temp: <b>${maiorValorC !== null ? maiorValorC + '°C' : 'N/A'}</b> | 
+//   💻 CPU: <b>${ponto.valores[0]}%</b> | 
+//   📶 Lat: <b>${ponto.valores[2]}ms</b>
+// </span>
+// `;
+//             }
 
             const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
                 .bindPopup(`<b class="nomedosw" style="color: ${ponto.ativo};">${ponto.nome} <br> <span class="latitude">${ponto.local}</span> ${info} </b>`);
