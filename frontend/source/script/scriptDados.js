@@ -223,7 +223,7 @@ async function carregarDados() {
 
 //lista de atalhos
 const menuContainer = document.getElementById('menu-container')
-
+map.setMaxZoom(17)
                     menuContainer.innerHTML = `
                                        
                 <div class="menu-list" onclick="map.setMaxZoom(17).flyTo(visaoDefault, 4, { duration: 0.5 })"><b>Mapa geral</b></div>
