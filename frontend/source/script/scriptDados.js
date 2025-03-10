@@ -194,7 +194,7 @@ async function carregarDados() {
 
             let info = '';
             if (ponto.valores) {
-                info = `<br><br> T: <b>${maiorValorC !== null ? maiorValorC + '°C' : 'N/A'} </b> - CPU: <b>${ponto.valores[0]}% - Latencia: <b>${ponto.valores[2]}ms</b>`;
+                info = `<br><span style="text-size: 12px; color: black;"> T: <b>${maiorValorC !== null ? maiorValorC + '°C' : 'N/A'} </b> - CPU: <b>${ponto.valores[0]}% - Latencia: <b>${ponto.valores[2]}ms</b></span>`;
             }
 
             const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
