@@ -194,7 +194,7 @@ async function carregarDados() {
 
             let info = '';
             if (ponto.valores) {
-                info = `<br>
+                info = `<br><br>
 <span style="font-size: 12px; color: gray;">
   🌡️ Temp: <b>${maiorValorC !== null ? maiorValorC + '°C' : 'N/A'}</b> | 
   💻 CPU: <b>${ponto.valores[0]}%</b> | 
