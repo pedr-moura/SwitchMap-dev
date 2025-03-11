@@ -22,8 +22,19 @@ function exibirNoMapaPorIP(ipBusca, dados) {
         if (resultado.local) {
             const [lat, lng] = resultado.local.split(', ').map(Number);
             console.log(lat, lng); // Log de depuração
-             // Criando um ícone com uma div para estilização
-             const iconeCustomizado = L.divIcon({
+
+            // Lógica para encontrar o maior valor com "C" em resultado.valores
+            let maiorValorC = null;
+            if (resultado.valores) {
+                const valoresComC = resultado.valores.filter(valor => valor.includes('C'));
+                if (valoresComC.length > 0) {
+                    const valoresNumericos = valoresComC.map(valor => parseFloat(valor));
+                    maiorValorC = Math.max(...valoresNumericos);
+                }
+            }
+
+            // Criando um ícone com uma div para estilização
+            const iconeCustomizado = L.divIcon({
                 className: 'custom-marker', // Classe CSS
                 html: `<img src="https://i.ibb.co/21HsN0y1/sw.png" id="icone-sw" style="border: 2px solid ${resultado.ativo}; box-shadow: inset 0 0 0 1.5px blue; " />`, // Ícone dentro da div
                 iconSize: [10, 30],
@@ -31,8 +42,19 @@ function exibirNoMapaPorIP(ipBusca, dados) {
                 popupAnchor: [0, -30]
             });
 
+            let info = '';
+            if (resultado.valores) {
+                info = `<br><br>
+<span style="font-size: 12px; color: gray;">
+  🌡️ Temp: <b>${maiorValorC !== null ? maiorValorC + '°C' : 'N/A'}</b> | 
+  💻 CPU: <b>${resultado.valores[0]}%</b> | 
+  📶 Lat: <b>${resultado.valores[2]}ms</b>
+</span>
+`;
+            }
+
             const marker = L.marker([lat, lng], { icon: iconeCustomizado }).addTo(markersLayer)
-                .bindPopup(`<b class="nomedosw"  style="color: ${resultado.ativo};">${resultado.nome} <br> <span class="latitude">${resultado.local}</span></b>`);
+                .bindPopup(`<b class="nomedosw" style="color: ${resultado.ativo};">${resultado.nome} <br> <span class="latitude">${resultado.local}</span> ${info} </b>`);
 
             pontosMapeados[resultado.ip] = { lat, lng, marker };
         }
